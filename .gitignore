@@ -2,7 +2,13 @@
 *.csv
 *.txt
 *.RData
-
+*.dbf
+*.prj
+*.sbn
+*.sbx
+*.shp
+*.shp.xml
+*.shx
 .Rhistory
 .Rapp.history
 
