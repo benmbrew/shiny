@@ -1,4 +1,5 @@
 library(shiny)
+source('read_in.R')
 
 # Define UI for slider demo application
 shinyUI(pageWithSidebar(
@@ -25,7 +26,9 @@ shinyUI(pageWithSidebar(
   mainPanel(
     tabsetPanel(id = 'tabs',
     tabPanel("Wins/Losses",
-             plotOutput("plot1"))
+             plotOutput("plot1")),
+    tabPanel('Mean Statistics',
+             tableOutput('table1'))
     )
   )
 ))

@@ -2,6 +2,7 @@ library(shiny)
 library(dplyr)
 library(reshape)
 
+
 # Define server logic for slider examples
 shinyServer(function(input, output) {
   
@@ -12,7 +13,7 @@ shinyServer(function(input, output) {
   }) 
   
   
-  # Show the values using an HTML table
+  # Plot 1
   output$plot1 <- renderPlot({
       
 
@@ -52,5 +53,48 @@ shinyServer(function(input, output) {
       }
     
     })
+  
+  # Plot 2
+  output$table1 <- renderTable({
+    
+    
+    if(input$opp == 'All Opponents'){
+      
+      temp <- year_set()
+      temp2 <- temp %>%
+        group_by(year) %>%
+        summarise(Points = mean(points),
+                  Total_Yds = mean(tot_yds),
+                  Pass_Yds = mean(pass_yds),
+                  Rush_Yds = mean(rush_yds),
+                  Opponent_Points = mean(opp_points),
+                  Opponent_Total_Yds = mean(def_totyds),
+                  Opponent_Pass_Yds = mean(def_passyds),
+                  Opponenet_Rush_Yds =mean(def_rushyds))
+     temp2
+      
+    }else{
+      
+      temp <- year_set()
+      temp <- temp[which(temp$opp == input$opp),]
+      temp2 <- temp %>%
+        group_by(year) %>%
+        summarise(Points = mean(points),
+                  Total_Yds = mean(tot_yds),
+                  Pass_Yds = mean(pass_yds),
+                  Rush_Yds = mean(rush_yds),
+                  Opponent_Points = mean(opp_points),
+                  Opponent_Total_Yds = mean(def_totyds),
+                  Opponent_Pass_Yds = mean(def_passyds),
+                  Opponenet_Rush_Yds =mean(def_rushyds))
+      
+      validate(
+        need(nrow(temp) > 0, "Please select a time frame and oppenent that coincide!")
+      )
+      
+     temp2
+    }
+    
+  })
   
 })
