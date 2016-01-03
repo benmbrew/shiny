@@ -55,7 +55,7 @@ shinyServer(function(input, output) {
     })
   
   # Plot 2
-  output$table1 <- renderTable({
+  output$table1 <- renderDataTable({
     
     
     if(input$opp == 'All Opponents'){
@@ -71,7 +71,10 @@ shinyServer(function(input, output) {
                   Opponent_Total_Yds = mean(def_totyds),
                   Opponent_Pass_Yds = mean(def_passyds),
                   Opponenet_Rush_Yds =mean(def_rushyds))
-     temp2
+                  
+      
+    temp2 <- roundInt(temp2)
+    temp2
       
     }else{
       
@@ -88,11 +91,13 @@ shinyServer(function(input, output) {
                   Opponent_Pass_Yds = mean(def_passyds),
                   Opponenet_Rush_Yds =mean(def_rushyds))
       
+      
       validate(
         need(nrow(temp) > 0, "Please select a time frame and oppenent that coincide!")
       )
       
-     temp2
+      temp2 <- roundInt(temp2)
+      temp2
     }
     
   })

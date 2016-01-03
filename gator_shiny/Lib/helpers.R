@@ -143,3 +143,13 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
     }
   }
 }
+
+roundInt <- function(data) {
+  
+  data.frame(lapply(data, function (x) {
+    
+    if (is.numeric(x)) round(x)
+    
+    else x
+  }))
+}

@@ -28,7 +28,7 @@ shinyUI(pageWithSidebar(
     tabPanel("Wins/Losses",
              plotOutput("plot1")),
     tabPanel('Mean Statistics',
-             tableOutput('table1'))
+             dataTableOutput('table1'))
     )
   )
 ))
