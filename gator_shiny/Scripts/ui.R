@@ -12,6 +12,12 @@ shinyUI(pageWithSidebar(
     # Simple integer interval
     sliderInput("year", "Year", 
                 min=2000, max=2015, value = c(2000,2015), sep = '')
+    ),
+    
+    conditionalPanel(condition = "input.tabs = 'Wins/Losses'",
+    selectInput("opp", "Opponent", 
+              c(unique(sort(as.character(dat$opp))), 'All Opponents'),
+              selected = 'All Opponents')
     )
   ),
   

@@ -10,11 +10,14 @@ shinyServer(function(input, output) {
     
   dat[which(dat$year >= input$year[1] & dat$year <= input$year[2]),]
   }) 
-    
+  
   
   # Show the values using an HTML table
   output$plot1 <- renderPlot({
-  
+      
+
+    if(input$opp == 'All Opponents'){
+      
     temp <- year_set()
     temp2 <- temp %>%
        group_by(result) %>%
@@ -23,8 +26,31 @@ shinyServer(function(input, output) {
     
     ggplot(data = temp2, aes(result, count)) + 
       geom_bar(stat= 'identity', fill = temp2$col, alpha = 0.8) + 
-      geom_text(data=temp2,aes(result,count,label=count),vjust=0) + 
-      xlab('Result') + ylab('Wins/Losses') + tt 
+      geom_text(data=temp2,aes(result,count,label=count),vjust=0, size = 8) + 
+      xlab('Result') + ylab('Wins/Losses') + 
+      ylim(c(0, max(temp2$count) + 10)) + tt 
+    
+    }else{
+    
+      temp <- year_set()
+      temp <- temp[which(temp$opp == input$opp),]
+  
+      validate(
+        need(nrow(temp) > 0, "Please select a time frame and oppenent that coincide!")
+      )
+    
+      temp2 <- temp %>%
+        group_by(result) %>%
+        summarise(count = n())
+      temp2$col <- ifelse(temp2$result == 'W', 'blue', 'orange')
       
-  })
+      ggplot(data = temp2, aes(result, count)) + 
+        geom_bar(stat= 'identity', fill = temp2$col, alpha = 0.8) + 
+        geom_text(data=temp2,aes(result,count,label=count),vjust=0, size = 8) + 
+        xlab('Result') + ylab('Wins/Losses') + 
+        ylim(c(0, max(temp2$count) + 10)) + tt 
+      }
+    
+    })
+  
 })
